@@ -1,0 +1,451 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poetsen+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito&family=Roboto+Slab:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@900&family=Montserrat&display=swap');
+
+/*Tablas*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+/*Titulos Contenedores*/
+@import url('https://fonts.googleapis.com/css2?family=Arsenal+SC:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+body {
+    font-size: 75%; /* Reduce el tamaño del texto */
+  }
+
+.containerPrincipal {
+    width: 100%;
+    margin-right: 0 auto;
+    background-color: #ffffff;
+}
+
+/* ---------------- Tabla Contador de Licencias ------------------ */
+
+.cabecera {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #d1d1d1;
+    margin: 5px;
+}
+
+.pestanas {
+    display: flex;
+    background-color: #f1f1f1;
+    border-right: 1px solid #c3c3c3;
+    border-left: 1px solid #c3c3c3;
+    width: 600px;
+    padding: 0;
+    margin: 0;
+    border-left: none;
+    border-right: none;
+    
+}
+
+.pestanas>* {
+    flex-grow: 1;
+    flex-basis: 0;
+    margin: 0;
+}
+
+.pestanas a {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #333;
+    cursor: pointer;
+    border-right: 1px solid #c3c3c3;
+    padding-left: 2px;
+    margin-right: 1px;
+}
+
+.pestanas a:hover {
+    background-color: #aaaaaa !important;
+}
+
+.pestanas a.active {
+    background-color: #0459A1;
+    color: white;
+}
+
+.titulo {
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: none;
+    background-color: #f8f8f2;
+}
+
+.titulo img {
+    max-width: 120px;
+    margin-right: 5px;
+    margin-left: 10px;
+}
+
+.titulo h1 {
+    margin: 0;
+    text-align: center;
+    flex-grow: 1;
+    font-family: 'Roboto Slab', serif;
+    color: black;
+    margin-left: -110px;
+}
+
+/*----------------------- Cargando -------------------------------*/
+
+.swal2-popup.swal2-noanimation {
+    background: rgba(0, 0, 0, 0.8); /* Fondo oscuro transparente */
+    border-radius: 15px; /* Esquinas redondeadas */
+    padding: 15px;
+  }
+  
+  .swal2-custom-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .rotating-container {
+    position: relative;
+  }
+  
+  .rotating-image {
+    width: 80px; /* Ajusta el tamaño de la imagen */
+    height: 80px; /* Ajusta el tamaño de la imagen */
+    animation: spin 2s linear infinite;
+    margin-bottom: 10px;
+  }
+  
+  .rotating-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 3px solid rgba(4, 89, 161, 0.5); /* Borde luminoso */
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(4, 89, 161, 0.7);
+    animation: glow 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes glow {
+    0%, 100% {
+      box-shadow: 0 0 10px rgba(4, 89, 161, 0.7);
+    }
+    50% {
+      box-shadow: 0 0 15px rgba(4, 89, 161, 1);
+    }
+  }
+  
+
+  .loading-message {
+    font-size: 18px; /* Ajusta el tamaño del texto */
+    color: #fff;
+    text-align: center;
+    transition: opacity 0.5s ease-in-out;
+    animation: fadeIn 1s ease-in-out infinite;
+  }
+  
+  @keyframes fadeIn {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+  
+
+/* ----------------------- Containers y Títulos ------------------------------- */
+.containerInfo {
+    width: 100%;
+    margin: 5px;
+    padding: 5px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 2px 2px 0px #c9c9c9;
+    border: 0.5px solid rgb(193, 193, 193);
+}
+
+.tituloContainerInfo {
+    font-size: 35px;
+    border-bottom: 1px solid #000000;
+    background-color: #ffffff;
+    font-family: "Arsenal SC", sans-serif;
+    font-style: normal;
+    text-align: left;
+}
+
+.contenedorFlex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center !important;
+    gap: 10px;
+}
+
+.containerTablaLicenciasUso {
+    width: 50%;
+    margin-right: 10px;
+}
+
+/* ----------------------- Sección información Licencias ------------------------------- */
+
+
+#graficoLicencias {
+    height: auto;
+    min-width: 700px;
+    min-height: 300px;
+    padding-right: 50px;
+}
+
+#tablaEstadoLicencias th {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #ffffff;
+    text-transform: uppercase;
+    border: 0.5px solid #ccc;
+    padding: 8px;
+    text-align: center;
+    background-color: #0459A1;
+}
+
+.containerTablaLicenciasUso table {
+    width: 100%;
+    table-layout: fixed; 
+}
+
+.containerTablaLicenciasUso th,
+.containerTablaLicenciasUso td {
+    white-space: nowrap;
+    padding: 7px;
+    border: 1px solid #747474;
+}
+
+#tablaEstadoLicencias {
+    border: 0.5px solid #474747;
+    border-collapse: collapse;
+    table-layout: auto;
+    width: 100%;
+}
+
+#tablaEstadoLicencias th, #tablaEstadoLicencias td {
+    white-space: nowrap;
+    width: 100px;
+}
+
+#tablaEstadoLicencias tbody td:first-child {
+    font-family: 'Open Sans', sans-serif;
+}
+
+#tablaEstadoLicencias tbody td {
+    padding: 8px;
+    text-align: center;
+    font-size: 15px;
+}
+  
+
+  /*---------------------------FILTRO---------------------------*/
+
+  .contenedorFlexFiltros {
+
+    display: flex;
+    align-items: center !important;
+    justify-content: center; 
+    gap: 10px;
+
+
+  }
+
+  .containerFiltros {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.card {
+    width: 100%;
+}
+
+.card-body {
+    padding: 9px;
+}
+
+
+.card-title {
+    font-size: 1.7rem; 
+    margin-bottom: 8px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.aplicarFlex {
+    display: flex;
+    flex-direction: column;
+}
+
+.bordeDerecho{
+    border-right: 0.5px solid #0459A1;
+    padding-right: 10px;
+}
+
+.datosEstadisticas {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#grupo1 {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#grupo1 label {
+    font-size: 0.8rem;
+    margin: 3px;
+    padding: 3px 7px;
+    border-radius: 5px;
+    background-color: #d3d3d3; /* Color gris suave */
+    color: #000; /* Color del texto */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#grupo1 input[type="radio"] {
+    display: none; /* Ocultar los botones de radio */
+}
+
+#grupo1 input[type="radio"]:checked + label {
+    background-color: #0459A1; /* Color para la opción seleccionada */
+    color: #fff; /* Color del texto para la opción seleccionada */
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border: 1px solid #6c757d;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+@media (max-width: 768px) {
+    #grupo1 {
+        justify-content: center;
+    }
+
+    #grupo1 label {
+        flex: 1 1 100%;
+        text-align: center;
+        margin: 3px 0;
+    }
+}
+
+/* --------------------- Opciones --------------------------------- */
+
+.rotar {
+    animation: girarReverso 2s linear infinite;
+}
+
+@keyframes girarReverso {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(-360deg); 
+    }
+}
+
+
+
+/*----------------------- Tabla Usuarios y Movimientos de licencia -------------------------------*/
+
+/* Selecciona únicamente el input de búsqueda que controla la tabla "tablaUsuarios" */
+input[type="search"].form-control.form-control-sm[aria-controls="tablaUsuarios"] {
+    width: 295px; /* Ajusta este valor al ancho que desees */
+    border: 1px solid #0459A1;
+    background-color: rgb(247, 245, 243);
+}
+
+.containerFiltros {
+    background-color: rgb(255, 255, 255);
+    margin-bottom: 10px;
+}
+
+#tablaUsuarios,
+#tablaMovimientosLicencia {
+    width: 100%;
+    border: 0.5px solid #474747;
+    border-collapse: collapse;
+}
+
+#tablaUsuarios th,
+#tablaMovimientosLicencia th {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #fff;
+    text-transform: uppercase;
+    border: 0.5px solid #ccc;
+    padding: 8px;
+    text-align: center;
+    background-color: #0459A1;
+}
+
+#tablaUsuarios th {
+    font-size: 14px;
+}
+
+#tablaUsuarios td,
+#tablaMovimientosLicencia td {
+    font-size: 12px;
+    border: 0.5px solid #ccc;
+    padding: 6px;
+    text-align: center;
+}
+
+#tablaUsuarios tbody tr:nth-child(even),
+#tablaMovimientosLicencia tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/*----------------------- Sweetalert2 -------------------------------*/
+
+.btn-blue {
+    background-color: #0459A1;
+    color: #ffffff;
+}
+
+
+/*----------------------- swal2 -------------------------------*/
+
+.swal2-title-custom {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.swal2-html-container-custom {
+    text-align: center;
+}
+
+
+
+

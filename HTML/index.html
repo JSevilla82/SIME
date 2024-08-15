@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Icontec</title>
+
+        <!-- Estilos Librerias -->
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css">
+
+        <!-- DataTables -->
+        <link rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css"
+            href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+
+        <!-- Estilos -->
+        <link rel="stylesheet"
+            href="../../JairoSevilla/SiteAssets/InformesEntraID/CSS/estilos.css">
+        <link rel="stylesheet"
+            href="../../JairoSevilla/SiteAssets/InformesEntraID/CSS/main.css">
+
+    </head>
+
+    <body>
+
+        <main class="page-content pt-2">
+            <div class="containerPrincipal">
+
+                <div class="titulo">
+                    <img
+                        src="../../JairoSevilla/SiteAssets/InformesEntraID/IMAGENES/logo_icontec.png"
+                        alt="Logo Icontec">
+                    <h1>SIME ICONTEC</h1>
+                </div>
+
+                <div class="cabecera">
+                    <div class="pestanas">
+                        <a href="#" class="pestana active"
+                            onclick="mostrarContenido(event, 'contenido-tablas')">
+                            <span class="icono-tablas"></span>
+                            Licenciamiento Microsoft 365
+                        </a>
+                        <a href="#" class="pestana"
+                            onclick="mostrarAlerta('¡Aviso!', 'El modulo se encuentra en fase de desarrollo.', 'warning')">
+                            <span class="icono-graficos"></span>
+                            Doble Factor de Autenticación
+                        </a>
+
+                    </div>
+                </div>
+
+                <!----- Tablas ------->
+
+                <div class="containerInfo">
+                    <h2 class="tituloContainerInfo"> Licencias</h2>
+                    <div class="contenedorFlex">
+                        <div class="containerTablaLicenciasUso">
+                            <table id="tablaEstadoLicencias"
+                                class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Licencia</th>
+                                        <th>Disponibles</th>
+                                        <th>En Uso</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Datos de la tabla -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div>
+                            <canvas id="graficoLicencias"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="containerInfo containerTablaUsuarios">
+                    <h2 class="tituloContainerInfo"> Usuarios</h2>
+
+                    <div class="containerFiltros">
+
+                        <div class="card" style="width: 45%;">
+                            <div class="card-body">
+                                <h2 class="card-title">Filtro</h2>
+
+                                <div class="contenedorFlexFiltros">
+
+                                    <div class="form-group">
+                                        <label
+                                            for="filtroUsuarios">Usuarios:</label>
+                                        <select class="form-control"
+                                            id="filtroUsuarios">
+                                            <option value="todos">Todos los
+                                                usuarios</option>
+                                            <option value="conLicencia">Usuarios
+                                                con Licencias</option>
+                                            <option value="sinLicencia">Usuarios
+                                                Sin Licencia</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label
+                                            for="filtroLicencias">Licencias:</label>
+                                        <select class="form-control" id="filtroLicencias">
+                                            <!-- Otras opciones de licencia se agregarán aquí -->
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="filtroEstadoSesion">Inicio de sesión:</label>
+                                        <select class="form-control" id="filtroEstadoSesion" disabled>
+                                            <option value="todos">Todos los estados</option>
+                                            <option value="habilitado">Habilitado</option>
+                                            <option value="bloqueado">Bloqueado</option>
+                                        </select>
+                                    </div>
+                                    
+                                    
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="card" style="width: 35%;">
+                            <div class="card-body">
+                                <h2 class="card-title">Estadísticas</h2>
+                                <div class="contenedorFlexFiltros">
+                                    <div class="form-group aplicarFlex bordeDerecho">
+                                        <label for="totalUsuarios">Total Usuarios</label>
+                                        <span id="totalUsuarios" class="datosEstadisticas">0</span>
+                                    </div>
+                                    <div class="form-group aplicarFlex bordeDerecho">
+                                        <label for="usuariosConLicencia">Con Licencias</label>
+                                        <span id="usuariosConLicencia" class="datosEstadisticas">0</span>
+                                    </div>
+                                    <div class="form-group aplicarFlex bordeDerecho">
+                                        <label for="usuariosSinLicencia">Sin Licencias</label>
+                                        <span id="usuariosSinLicencia" class="datosEstadisticas">0</span>
+                                    </div>
+                                    <div class="form-group aplicarFlex bordeDerecho">
+                                        <label for="usuariosLicenciaBloqueado">Bloqueados</label>
+                                        <span id="usuariosLicenciaBloqueado" class="datosEstadisticas" style=" color: rgb(218, 23, 49);">0</span>
+                                    </div>
+                                    <div class="form-group aplicarFlex">
+                                        <label for="usuariosFiltrados">Datos Filtrados</label>
+                                        <span id="usuariosFiltrados" class="datosEstadisticas" style=" color: rgb(0, 11, 109);">0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="card" style="width: 20%;">
+                            <div class="card-body">
+                                <h2 class="card-title">Opciones</h2>
+                                <div class="contenedorFlexFiltros" style="margin-top: 23px;">
+
+                                    <div class="form-group">
+                                        <button id="exportBtn"
+                                            style="display: flex; align-items: center;">
+                                            <img
+                                                src="../../JairoSevilla/SiteAssets/InformesEntraID/IMAGENES/logo_excel.png"
+                                                alt="Exportar usuarios a Excel"
+                                                style="width: 30px; height: 30px; margin-right: 8px;">
+                                            Exportar
+                                        </button>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button id="sincronizarBtn" style="display: flex; align-items: center;">
+                                            <img
+                                                id="iconoSincronizar"
+                                                src="../../JairoSevilla/SiteAssets/InformesEntraID/IMAGENES/refresh_reload_icon.png"
+                                                alt="Sincronizar actualizaciones"
+                                                style="width: 30px; height: 30px; margin-right: 8px;">
+                                            Actualizar Usuarios
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <table id="tablaUsuarios"
+                        class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Nombre Completo</th>
+                                <th>Correo Electrónico</th>
+                                <th>Cargo</th>
+                                <th>Ubicación</th>
+                                <!-- <th>Licencia Principal</th> -->
+                                <th>Licencias</th>
+                                <th>Login</th>
+                                <th>Fecha de Creación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Datos de la tabla -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="containerInfo containerTablaUsuarios">
+                <h2 class="tituloContainerInfo"> Movimientos de Licencias -
+                    Beta</h2>
+
+                <table id="tablaMovimientosLicencia"
+                    class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha y Hora</th>
+                            <th>Usuario Afectado</th>
+                            <th>Actor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Datos de la tabla -->
+                    </tbody>
+                </table>
+            </div>
+
+        </main>
+
+        <!-- jquery-3.7.1 -->
+        <script
+            src="../../JairoSevilla/SiteAssets/InformesEntraID/LIBRERIAS/jquery/jquery-3.7.1.min.js"></script>
+        <!-- sweetalert2 -->
+        <script
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <!-- msal-browser -->
+        <script
+            src="https://alcdn.msauth.net/browser/2.20.0/js/msal-browser.min.js"
+            crossorigin="anonymous"></script>
+        <!-- Scripts MVC -->
+        <script
+            src="../../JairoSevilla/SiteAssets/InformesEntraID/JAVASCRIPT/modelo.js"></script>
+        <script
+            src="../../JairoSevilla/SiteAssets/InformesEntraID/JAVASCRIPT/vista.js"></script>
+        <script
+            src="../../JairoSevilla/SiteAssets/InformesEntraID/JAVASCRIPT/controlador.js"></script>
+        <!-- JS de Bootstrap -->
+        <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <!-- JS de DataTables -->
+        <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+        <!-- chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <!-- Sheet.JS -->
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
+    </body>
+
+</html>
