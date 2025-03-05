@@ -1,14 +1,51 @@
 /*--------------------------------------- Autenticarse en Microsoft Graph - Token de Acceso----------------------------------------------*/
 
-const configuracionMsal = {
-    auth: {
-        clientId: "98888efe-4cb3-4bfc-a713-d6bfee0d592f",
-        authority: "https://login.microsoftonline.com/ba76129b-6751-49e9-99a6-08b57c4e80fc",
-        redirectUri: "https://icontec.sharepoint.com/sites/JairoSevilla/SitePages/InformesEntraID.aspx"
-    }
-};
+window.usuariosEntraID = [];
+window.estado2FA = [];
 
-const instanciaMsal = new msal.PublicClientApplication(configuracionMsal);
+window.BDEstado2FA = [];
+window.BDIdentificadorLicencias = []
+
+let configuracionMsal = {};
+let instanciaMsal;
+
+/*---------------------------- Preparar sesión para consumir información de la API GRAPH----------------------------------------------------*/
+
+async function buscarConfiguracionMsal() {
+    const filter = "";
+    const adicionales = '$select=ID,Title,authority,redirectUri';
+    try {
+        const datos = await consultarDatos(listaConfiguracionMsal, filter, adicionales);
+        
+        if (datos && datos.length > 0) {
+            const configuracion = datos[0];
+
+            configuracionMsal = {
+                auth: {
+                    clientId: configuracion.Title, 
+                    authority: configuracion.authority,
+                    redirectUri: configuracion.redirectUri
+                }
+            };
+            return configuracionMsal; 
+        } else {
+            return null;
+        }
+    } catch (error) {
+        mostrarAlerta('Error', 'Hubo un problema al iniciar sesión. Intenta nuevamente más tarde.', 'error');
+        throw error;
+    }
+}
+
+async function inicializarMsal() {
+    try {
+        await buscarConfiguracionMsal(); 
+        instanciaMsal = new msal.PublicClientApplication(configuracionMsal); 
+    } catch (error) {
+        mostrarAlerta('Error', 'Hubo un problema al iniciar sesión. Intenta nuevamente más tarde.', 'error');
+        throw error;
+    }
+}
 
 async function iniciarSesion() {
 
@@ -27,14 +64,15 @@ async function iniciarSesion() {
                 await instanciaMsal.loginRedirect(solicitud);
             } catch (errorRedireccion) {
                 console.error('Error durante el inicio de sesión con redirección:', errorRedireccion);
-                mostrarAlerta('Error', 'Hubo un problema al iniciar sesión. Intenta nuevamente más tarde.', 'error');
+                //  mostrarAlerta('Error', 'Hubo un problema al iniciar sesión. Intenta nuevamente más tarde.', 'error');
             }
         } else {
             console.error('Error durante el inicio de sesión:', errorPopup);
-            mostrarAlerta('Error', 'Hubo un problema al iniciar sesión. Intenta nuevamente más tarde.', 'error');
+            // mostrarAlerta('Error', 'Hubo un problema al iniciar sesión. Intenta nuevamente más tarde.', 'error');
         }
     }
 }
+
 
 async function obtenerToken() {
 
@@ -58,10 +96,11 @@ async function obtenerToken() {
                 .catch(() => instanciaMsal.acquireTokenRedirect(solicitud));
         } else {
             console.error('Error al obtener el token en modo silencioso:', error);
-            mostrarAlerta('Error', 'Hubo un problema al obtener el token. Recargar la Página.', 'error');
+            //mostrarAlerta('Error', 'Hubo un problema al obtener el token. Recargar la Página.', 'error');
         }
     }
 }
+
 
 async function inicializarAutenticacion() {
 
@@ -77,129 +116,169 @@ async function inicializarAutenticacion() {
         }
 
         const token = await obtenerToken();
-        // console.log('Token de acceso:', token);
 
     } catch (error) {
         console.error('Error durante la inicialización de autenticación:', error);
-        mostrarAlerta('Error', 'Hubo un problema durante la inicialización de la autenticación. Intenta nuevamente más tarde.', 'error');
+        // mostrarAlerta('Error', 'Hubo un problema durante la inicialización de la autenticación. Intenta nuevamente más tarde.', 'error');
     }
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 /*--------------------------------------- Consultas a Microsoft Graph ----------------------------------------------*/
 
-const licenciasMap = {
 
-    '05e9a617-0261-4cee-bb44-138d3ef5d965': 'Microsoft 365 E3', // SPE_E3
-    '6fd2c87f-b296-42f0-b197-1e91e994b900': 'Office 365 E3', // ENTERPRISEPACK
-    '4b585984-651b-448a-9e53-3b10f069cf7f': 'Office 365 F3', // DESKLESSPACK
+const userId = 'abogoya@icontec.onmicrosoft.com'; // O el ID del usuario
+getAssignedLicensesForUser(userId);
 
-    'bc946dac-7877-4271-b2f7-99d2db13cd2c': 'Prueba de Dynamics 365 Customer Voice', // FORMS_PRO
-    'a403ebcc-fae0-4ca2-8c8c-7a907fd6c235': 'Microsoft Fabric (Gratis)', //POWER_BI_STANDARD
-    '46102f44-d912-47e7-b0ca-1bd7b70ada3b' :'Project plan 3 (for Departments)', //PROJECT_PLAN3_DEPT
-    'f30db892-07e9-47e9-837c-80727f46fd3d': 'Microsoft Power Automate (Gratis)', // FLOW_FREE
-    'f8a1db68-be16-40ed-86d5-cb42ce701560': 'Power BI Pro', // POWER_BI_PRO
-    '4a51bf65-409c-4a91-b845-1121b571cc9d': 'Power Automate per user plan', // FLOW_PER_USER
-    '53818b1b-4a27-454b-8896-0dba576410e6': 'Project Plan 3', // PROJECTPROFESSIONAL
+async function getAssignedLicensesForUser(userId) {
+    const token = await obtenerToken();
+    let url = `https://graph.microsoft.com/v1.0/users/${userId}?$select=id,displayName,userPrincipalName,assignedLicenses`;
 
+    const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+    };
 
-    '1f2f344a-700d-42c9-9427-5cea1d5d7ba6': 'Prueba de Microsoft Stream', // STREAM
-    '99049c9c-6011-4908-bf17-15f496e6519d': 'OneDrive for Business (Plan 2)', // SHAREPOINTSTORAGE
-    '606b54a9-78d8-4298-ad8b-df6ef4481c80': 'Power Virtual Agents Viral Trial', // CCIBOTS_PRIVPREV_VIRAL
-    
-    'dcb1a3ae-b33f-4487-846a-a640262fadf4': 'Microsoft Power Apps for Developer', // POWERAPPS_VIRAL
-    '338148b6-1b11-4102-afb9-f92b6cdc0f8d': 'Dynamics 365 P1 Trial for Information Workers', // DYN365_ENTERPRISE_P1_IW
-    'e0dfc8b9-9531-4ec8-94b4-9fec23b05fc8': 'Microsoft Teams Exploratory', // Microsoft_Teams_Exploratory_Dept
-    'c1d032e0-5619-4761-9b5c-75b6831e1711': 'Power BI Premium por Usuario', // PBI_PREMIUM_PER_USER
-    '3f9f06f5-3c31-472c-985f-62d9c10ec167': 'Power Pages vTrial for Makers', // Power_Pages_vTrial_for_Makers
-    'b30411f5-fea1-4a59-9ad9-3db7c7ead579': 'Power Apps Premium', // POWERAPPS_PER_USER
-   
-    '52ea0e27-ae73-4983-a08f-13561ebdb823': 'Teams Premium (for Departments)', // Teams_Premium_(for_Departments)
-    '4cde982a-ede4-4409-9ae6-b003453c8ea6': 'Salas de Microsoft Teams Pro', // Microsoft_Teams_Rooms_Pro
-    '5b631642-bd26-49fe-bd20-1daaa972ef80': 'Microsoft Power Apps for Developer', // POWERAPPS_DEV
-};
+    console.time('Tiempo de consulta de licencias del usuario');
 
+    try {
+        const response = await fetch(url, { headers });
+        if (!response.ok) {
+            throw new Error(`Error al obtener las licencias del usuario: ${response.statusText}`);
+        }
 
-//////////////////////////////////////// VERIFICACIONES EXTRAS /////////////////////////////////
+        const userData = await response.json();
 
-// alert("Ejecutar 2FA");
-// verificarEstado2FA("jairo.sevilla@icontec.net", token);
+        console.log(`Licencias asignadas al usuario ${userData.displayName}:`, userData.assignedLicenses);
 
-// async function verificarEstado2FA(userId, token) {
-//     const metodosAutenticacion = await consultarMetodosAutenticacion(userId, token);
-//     const estado2FA = determinarEstado2FA(metodosAutenticacion);
-//     console.log(`${userId}: ${estado2FA}`);
-// }
+        console.timeEnd('Tiempo de consulta de licencias del usuario');
 
-// async function consultarMetodosAutenticacion(userId, token) {
-//     const url = `https://graph.microsoft.com/v1.0/users/${userId}/authentication/methods`;
+        return userData.assignedLicenses;
 
-//     try {
-//         const response = await fetch(url, {
-//             method: 'GET',
-//             headers: {
-//                 'Authorization': `Bearer ${token}`,
-//                 'Content-Type': 'application/json'
-//             }
-//         });
-
-//         if (response.ok) {
-//             const data = await response.json();
-//             return data.value; 
-//         } else {
-//             console.error(`Error al consultar los métodos de autenticación para el usuario ${userId}:`, response.status, response.statusText);
-//             return null; 
-//         }
-//     } catch (error) {
-//         console.error(`Error al hacer la solicitud para el usuario ${userId}:`, error);
-//         return null; 
-//     }
-// }
-
-// function determinarEstado2FA(metodosAutenticacion) {
-//     if (!metodosAutenticacion || metodosAutenticacion.length === 0) {
-//         return "DESHABILITADO";
-//     }
-//     const tieneAuthenticator = metodosAutenticacion.some(metodo => 
-//         metodo['@odata.type'] === '#microsoft.graph.microsoftAuthenticatorAuthenticationMethod'
-//     );
-//     return tieneAuthenticator ? "HABILITADO" : "DESHABILITADO";
-// }
+    } catch (error) {
+        console.error(`Error al consultar las licencias del usuario: ${error.message}`);
+        console.timeEnd('Tiempo de consulta de licencias del usuario');
+    }
+}
 
 
 
+//const groupId = '24c16128-9549-47ae-8298-2906576e0b3a'; 
+//getAllGroupMembers(groupId);
 
-// async function obtenerInfoUsuario(userName) {
+async function getAllGroupMembers(groupId) {
+    const token = await obtenerToken();
+    let url = `https://graph.microsoft.com/v1.0/groups/${groupId}/members?$top=999&$select=id,displayName,userPrincipalName`;
 
-//     const token = await obtenerToken();
-//     // const url = `https://graph.microsoft.com/v1.0/users?$filter=mail eq '${userName}'&$select=displayName,mail,assignedLicenses`;
-//     const url = `https://graph.microsoft.com/v1.0/users?$filter=mail eq '${userName}'`;
+    const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+    };
 
-//     const respuestaUsuario = await fetch(url, {
-//         headers: {
-//             'Authorization': `Bearer ${token}`
-//         }
-//     });
+    let members = [];
+    let nextLink = null;
 
-//     if (!respuestaUsuario.ok) {
-//         throw new Error(`Error al obtener usuario: ${respuestaUsuario.status} ${respuestaUsuario.statusText}`);
-//     }
+    // Iniciar el cronómetro para medir el tiempo
+    console.time('Tiempo de consulta de miembros del grupo');
 
-//     const datosUsuario = await respuestaUsuario.json();
+    try {
+        do {
+            const response = await fetch(url, { headers });
+            if (!response.ok) {
+                throw new Error(`Error al obtener los miembros del grupo: ${response.statusText}`);
+            }
 
-//     if (datosUsuario.value.length === 0) {
-//         console.log(`No se encontró el usuario con correo ${userName}`);
-//         return;
-//     }
+            const data = await response.json();
+            members = members.concat(data.value);
 
-//     const usuario = datosUsuario.value[0];
-//     console.log('Información del usuario:', usuario);
-// }
+            // Verificar si hay más páginas
+            nextLink = data['@odata.nextLink'];
+            url = nextLink;
+
+        } while (nextLink);
+
+        console.log("Total de miembros del grupo:", members.length);
+        console.log("Datos de los miembros:", members);
+
+        // Finalizar el cronómetro y mostrar el tiempo transcurrido
+        console.timeEnd('Tiempo de consulta de miembros del grupo');
+
+        return members;
+
+    } catch (error) {
+        console.error(`Error al consultar los miembros del grupo: ${error.message}`);
+        console.timeEnd('Tiempo de consulta de miembros del grupo');
+    }
+}
 
 
-///////////////////////////////////////////////////////////////////////////////////////
 
 
-async function obtenerUsuarios(token) {
+/* Esta funcion se encarga de consultar todos los usuarios miembros de Entra ID, obtenie datos de usaurio y el Id de las licencias asignadas. */
+
+//const userId = 'f5432724-812c-4472-bc94-e70a8c9255ce'; 
+//getMfaStatus(userId);
+
+
+//const url = `https://graph.microsoft.com/v1.0/users/${userId}/authentication/methods`;
+
+async function getMfaStatus(userId) {
+    const token = await obtenerToken();
+    const url = `https://graph.microsoft.com/v1.0/users/${userId}/authentication/methods`;
+
+    const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+    };
+
+    try {
+        const response = await fetch(url, { headers });
+        if (!response.ok) {
+            throw new Error(`Error al obtener los métodos de autenticación: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        const methods = data.value;
+
+        console.log(data);
+        console.log("_______________________________________________________________");
+        console.log(methods);
+
+        const mfaStatus = {};
+
+        methods.forEach(method => {
+
+            switch (method.methodType) {
+                case 'phone':
+                    mfaStatus.phone = method.phoneNumber ? true : false;
+                    break;
+                case 'email':
+                    mfaStatus.email = method.emailAddress ? true : false;
+                    break;
+                case 'app':
+                    mfaStatus.app = method.appName ? true : false;
+                    break;
+                default:
+                    mfaStatus.unknown = true;
+                    break;
+            }
+        });
+
+        console.log('Estado MFA:', mfaStatus);
+        return mfaStatus;
+
+    } catch (error) {
+        console.error(`Error al consultar el estado de MFA: ${error.message}`);
+    }
+}
+
+
+//---------------------------------------------------- Consultas a Graph ------------------------------------------------------------//
+
+
+async function obtenerUsuarios(token, consultaConSignIn = false) {
     try {
         let datosUsuarios = [];
 
@@ -222,17 +301,27 @@ async function obtenerUsuarios(token) {
             }
         };
 
-        await obtenerUsuariosPagina(`https://graph.microsoft.com/v1.0/users?$filter=userType eq 'Member'&$select=displayName,mail,assignedLicenses,jobTitle,officeLocation,accountEnabled,createdDateTime`);
+        const url = consultaConSignIn
+            ? `https://graph.microsoft.com/v1.0/users?$filter=userType eq 'Member'&$select=id,displayName,mail,userPrincipalName,assignedLicenses,jobTitle,officeLocation,accountEnabled,createdDateTime,signInActivity`
+            : `https://graph.microsoft.com/v1.0/users?$filter=userType eq 'Member'&$select=id,displayName,mail,userPrincipalName,assignedLicenses,jobTitle,officeLocation,accountEnabled,createdDateTime`;
+
+        await obtenerUsuariosPagina(url);
 
         const usuariosConLicencias = datosUsuarios.map(usuario => {
             let licenciasPrincipales = [];
             let otrasLicencias = [];
+            let skuIds = []; // Nuevo arreglo para almacenar los skuIds
 
             if (usuario.assignedLicenses && usuario.assignedLicenses.length > 0) {
                 usuario.assignedLicenses.forEach(license => {
-                    const licenciaNombre = licenciasMap[license.skuId] || 'Licencia No Identificada';
 
-                    if (['Microsoft 365 E3', 'Office 365 E3', 'Office 365 F3'].includes(licenciaNombre)) {
+                    const skuId = license.skuId;
+
+                    const licenciaNombre = window.BDIdentificadorLicencias[skuId]?.NombreLicencia || 'Licencia No Identificada';
+
+                    skuIds.push(skuId);
+
+                    if (window.BDIdentificadorLicencias[skuId]?.LicenciaPrincipal === 1) {
                         licenciasPrincipales.push(licenciaNombre);
                     } else {
                         otrasLicencias.push(licenciaNombre);
@@ -244,30 +333,44 @@ async function obtenerUsuarios(token) {
 
             const assignedLicenses = [...licenciasPrincipales, ...otrasLicencias].join(', ');
 
+            const lastSignInDateTime = consultaConSignIn
+                ? (usuario.signInActivity && usuario.signInActivity.lastSignInDateTime
+                    ? formatearFechaColombia(usuario.signInActivity.lastSignInDateTime)
+                    : '-')
+                : 'Sin Descargar';
+
             return {
+                id: usuario.id || '-',
                 displayName: usuario.displayName || '-',
-                mail: usuario.mail || '-',
+                mail: usuario.userPrincipalName || usuario.mail || '-',
                 jobTitle: usuario.jobTitle || '-',
                 assignedLicenses: assignedLicenses,
+                skuIds: skuIds.join(', '),
                 officeLocation: usuario.officeLocation || '-',
                 accountEnabled: usuario.accountEnabled ? 'Habilitado' : 'Bloqueado',
-                createdDateTime: usuario.createdDateTime ? formatearFechaColombia(usuario.createdDateTime) : '-'
+                createdDateTime: usuario.createdDateTime ? formatearFechaColombia(usuario.createdDateTime) : '-',
+                lastSignInDateTime: lastSignInDateTime
             };
         });
 
+        window.usuariosEntraID = usuariosConLicencias;
+        generarLogin();
         return usuariosConLicencias;
 
     } catch (error) {
         console.error('Error al obtener usuarios y sus licencias:', error);
+        mostrarAlerta('Error de Conexión', 'No se pudo establecer comunicación con el servidor. Por favor, recargue la página e intente nuevamente.', 'error');
     } finally {
         ocultarCargando();
     }
 }
 
 
+
+/* Esta función se encarga de extraer la cantidad de licencias adquiridas por cada licencia que tenemos. */
+
 async function obtenerLicenciasDisponibles(token) {
     try {
-
         const respuestaLicencias = await fetch('https://graph.microsoft.com/v1.0/subscribedSkus', {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -279,10 +382,11 @@ async function obtenerLicenciasDisponibles(token) {
         }
 
         const datosLicencias = await respuestaLicencias.json();
-
         const licenciasDisponibles = datosLicencias.value.map(licencia => ({
-            nombre: licenciasMap[licencia.skuId] || 'OTRA LICENCIA',
-            total: licencia.prepaidUnits.enabled
+            nombre: window.BDIdentificadorLicencias[licencia.skuId]?.NombreLicencia || 'Licencia sin Identificar',
+            total: licencia.prepaidUnits.enabled,
+            licenciasExpiradas: licencia.prepaidUnits.warning,
+            skuId: licencia.skuId
         }));
 
         return licenciasDisponibles;
@@ -293,7 +397,11 @@ async function obtenerLicenciasDisponibles(token) {
 }
 
 
-const fetchAuditLogs = async (accessToken) => {
+
+/* Esta función se encarga de extraer los registros de uditorias para luego extraer solo los movimientos de licencias.
+Actualmente no se esta utilizando */
+
+const consultarAuditoriasLogs = async (accessToken) => {
     try {
         const response = await fetch('https://graph.microsoft.com/v1.0/auditLogs/directoryAudits', {
             method: 'GET',
@@ -319,56 +427,7 @@ const fetchAuditLogs = async (accessToken) => {
 };
 
 
-// function extraerInfoMovimientosLicencias(actividadesDeLicencia) {
-
-//     console.log(actividadesDeLicencia);
-
-//     const informacionLicencias = [];
-
-//     if (actividadesDeLicencia && Array.isArray(actividadesDeLicencia)) {
-//         actividadesDeLicencia.forEach(actividad => {
-//             const informacion = {};
-
-//             const fechaHora = new Date(actividad.activityDateTime);
-//             const fechaHoraColombia = new Intl.DateTimeFormat('es-CO', {
-//                 timeZone: 'America/Bogota',
-//                 day: '2-digit',
-//                 month: '2-digit',
-//                 year: 'numeric',
-//                 hour: 'numeric',
-//                 minute: 'numeric',
-//                 second: 'numeric'
-//             }).format(fechaHora);
-
-//             informacion.fechaHora = fechaHoraColombia;
-
-//             if (actividad.targetResources && actividad.targetResources.length > 0) {
-//                 informacion.usuarioAfectado = actividad.targetResources[0].userPrincipalName;
-//             } else {
-//                 informacion.usuarioAfectado = "System";
-//             }
-
-//             if (actividad.initiatedBy && actividad.initiatedBy.user && actividad.initiatedBy.user.userPrincipalName) {
-//                 informacion.actor = actividad.initiatedBy.user.userPrincipalName;
-//             } else {
-//                 informacion.actor = "System";
-//             }
-
-//             informacion.id = Math.floor(Math.random() * 1000);
-
-//             informacionLicencias.push(informacion);
-//         });
-//     } else {
-//         console.error('Error:', actividadesDeLicencia);
-//     }
-
-//     console.log(informacionLicencias);
-//     return informacionLicencias;
-// }
-
 function extraerInfoMovimientosLicencias(actividadesDeLicencia) {
-
-    console.log(actividadesDeLicencia);
 
     const informacionLicencias = [];
 
@@ -401,9 +460,9 @@ function extraerInfoMovimientosLicencias(actividadesDeLicencia) {
                 informacion.actor = "System";
             }
 
-            if(actividad.additionalDetails && actividad.additionalDetails[0] && actividad.additionalDetails[0].value){
+            if (actividad.additionalDetails && actividad.additionalDetails[0] && actividad.additionalDetails[0].value) {
                 informacion.id = actividad.additionalDetails[0].value;
-            }else{
+            } else {
                 informacion.id = "Sin información";
             }
 
@@ -413,25 +472,237 @@ function extraerInfoMovimientosLicencias(actividadesDeLicencia) {
         console.error('Error:', actividadesDeLicencia);
     }
 
-    console.log(informacionLicencias);
     return informacionLicencias;
 }
 
 
 
+/* ----------------------------------------------------- FUNCIONES (CRUD), SHAREPOINT ------------------------------------------------ */
+
+async function consultarDatos(lista, filter, adicionales) {
+    const endpoint = `${urlSIME}/_api/web/lists/getbytitle('${lista}')/items?${adicionales}&${filter}`;
+    let allResults = [];
+    let nextEndpoint = endpoint;
+
+    try {
+        while (nextEndpoint) {
+            const response = await fetch(nextEndpoint, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json;odata=verbose',
+                    'X-RequestDigest': document.getElementById("__REQUESTDIGEST").value,
+                    'Content-Type': 'application/json;odata=verbose'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error al consultar la lista ${lista}: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            allResults = allResults.concat(data.d.results);
+            nextEndpoint = data.d.__next ? data.d.__next : null;
+        }
+
+        return allResults;
+
+    } catch (error) {
+        console.error('Error al consultar datos:', error);
+        throw error;
+    }
+}
+
+
+
+async function verificarExistencia(url) {
+    try {
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                Accept: "application/json;odata=verbose"
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            if (data.d.results.length > 0) {
+                return data.d.results[0].ID;
+            } else {
+                return null;
+            }
+        } else {
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+
+async function generarLogin() {
+    try {
+        const correoElectronico = await new Promise((resolve, reject) => {
+            SP.SOD.executeFunc('sp.js', 'SP.ClientContext', function () {
+                var clientContext = SP.ClientContext.get_current();
+                var currentUser = clientContext.get_web().get_currentUser();
+                clientContext.load(currentUser);
+                clientContext.executeQueryAsync(
+                    function () {
+                        resolve(currentUser.get_email());
+                    },
+                    function (sender, args) {
+                        reject('Error: ' + args.get_message());
+                    }
+                );
+            });
+        });
+
+        const objetoDatos = {
+            Title: "Inicio de sesion",
+            Usuario: correoElectronico
+        };
+
+        const url = `${_spPageContextInfo.webAbsoluteUrl}/_api/web/lists/getbytitle('LogsAppSime')/items`;
+        await insertarDatos(url, objetoDatos, 'LogsAppSime');
+
+        const nombreLogin = window.usuariosEntraID.find(item => item.mail === correoElectronico)?.displayName;
+
+        document.getElementById('loginNombre').textContent = nombreLogin;
+        document.getElementById('loginCorreo').textContent = correoElectronico;
+
+        const titulo = document.querySelector('.titulo h1');
+        if (titulo) {
+            titulo.style.marginLeft = '110px';
+        }
+
+    } catch (error) {
+    }
+}
 
 
 
 
+async function insertarDatos(url, objetoDatos, nombreLista) {
+    const spdata = `SP.Data.${nombreLista}ListItem`;
+    objetoDatos.__metadata = { type: spdata };
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                Accept: "application/json;odata=verbose",
+                "X-RequestDigest": document.getElementById("__REQUESTDIGEST").value,
+                "Content-Type": "application/json;odata=verbose"
+            },
+            body: JSON.stringify(objetoDatos)
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        } else {
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+
+async function actualizarDatos(urlActualizar, objetoDatos, nombreLista) {
+    const spdata = `SP.Data.${nombreLista}ListItem`;
+    const dataActualizar = {
+        ...objetoDatos,
+        __metadata: { type: spdata }
+    };
+
+    try {
+        const response = await fetch(urlActualizar, {
+            method: "MERGE",
+            headers: {
+                Accept: "application/json;odata=verbose",
+                "X-RequestDigest": document.getElementById("__REQUESTDIGEST").value,
+                "Content-Type": "application/json;odata=verbose",
+                "IF-MATCH": "*"
+            },
+            body: JSON.stringify(dataActualizar)
+        });
+
+        if (response.ok) {
+            return true;
+        } else {
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+    } catch (error) {
+        console.error("Error", error);
+        throw error;
+    }
+}
+
+
+async function obtenerUltimaModificacionLista(nombreLista) {
+    const url = `${urlSIME}/_api/web/lists/getbytitle('${nombreLista}')/items?$orderby=Modified desc&$top=1&$select=Modified`;
+
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json;odata=verbose'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error en la solicitud: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        if (data.d.results.length > 0) {
+            const ultimaModificacion = data.d.results[0].Modified;
+            return ultimaModificacion;
+        } else {
+            return null;
+        }
+    } catch (error) {
+        console.error('Error al obtener la última modificación:', error);
+        throw error;
+    }
+}
 
 
 
+async function removeMfaConfiguration(token, userEmail) {
+    const urlGetMethods = `https://graph.microsoft.com/v1.0/users/${userEmail}/authentication/methods`;
 
+    const options = {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    };
 
+    try {
 
+        const responseGet = await fetch(urlGetMethods, options);
+        if (!responseGet.ok) {
+            const errorData = await responseGet.json();
+            return { success: false, message: `Failed to get authentication methods: ${errorData.error.message}` };
+        }
 
+        const methods = await responseGet.json();
 
+        for (const method of methods.value) {
+            const methodId = method.id;
+            const urlDeleteMethod = `https://graph.microsoft.com/v1.0/users/${userEmail}/authentication/methods/${methodId}`;
+            const responseDelete = await fetch(urlDeleteMethod, { ...options, method: 'DELETE' });
 
+            if (!responseDelete.ok) {
+                const errorData = await responseDelete.json();
+                return { success: false, message: `Failed to remove MFA method ${methodId}: ${errorData.error.message}` };
+            }
+        }
 
-
-
+        return { success: true, message: 'MFA configuration removed successfully.' };
+    } catch (error) {
+        console.error('Network error:', error);
+        return { success: false, message: 'Network error occurred.' };
+    }
+}
