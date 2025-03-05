@@ -3,15 +3,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@900&family=Montserrat&display=swap');
 
+@import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;1,300&family=Noto+Serif:wght@900&family=Quicksand:wght@500&family=REM:wght@500&family=Raleway:ital,wght@0,300;1,300;1,400&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;1,300&family=Noto+Serif:wght@900&family=Quicksand:wght@300;500&family=REM:wght@500&family=Raleway:ital,wght@0,300;1,300;1,400&display=swap');
+
+
 /*Tablas*/
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
 
 /*Titulos Contenedores*/
 @import url('https://fonts.googleapis.com/css2?family=Arsenal+SC:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
+@media (max-width: 768px) {
+    body {
+        font-size: 12px;
+    }
+    .container {
+        padding: 5px;
+    }
+}
+
 body {
-    font-size: 75%; /* Reduce el tamaño del texto */
+    font-size: 65%; /* Reduce el tamaño del texto */ 
   }
+
+  html {
+    zoom: 90%; /* Reduce todo el contenido al 80% */
+}
 
 .containerPrincipal {
     width: 100%;
@@ -19,55 +36,121 @@ body {
     background-color: #ffffff;
 }
 
-/* ---------------- Tabla Contador de Licencias ------------------ */
+/*--------------------------------------------------------------------------------------------------------------------*/
 
-.cabecera {
+/*----------------------- Cabecera -------------------------------*/
+
+.header {
     display: flex;
-    justify-content: space-between;
-    border: 1px solid #d1d1d1;
-    margin: 5px;
+    align-items: center;
+    background-color: #06213b;
+    padding: 10px 20px;
+    color: #fff;
 }
 
-.pestanas {
+.header-left {
     display: flex;
-    background-color: #f1f1f1;
-    border-right: 1px solid #c3c3c3;
-    border-left: 1px solid #c3c3c3;
-    width: 600px;
+    align-items: center;
+    gap: 10px;
+    margin-right: 30px; 
+}
+
+.logo {
+    height: 40px; 
+    cursor: pointer;
+    filter: brightness(0) invert(1);
+}
+
+.btn-header {
+    width: 170px;
+    background-color: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+    padding: 5px 15px;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    margin-left: 20px;
+}
+
+.btn-header:hover {
+    background-color: #fff;
+    color: #00274d;
+}
+
+.header-nav {
+    flex-grow: 1;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
     padding: 0;
     margin: 0;
-    border-left: none;
-    border-right: none;
-    
+    gap: 20px;
+    border-radius: 5px;
+ 
 }
 
-.pestanas>* {
-    flex-grow: 1;
-    flex-basis: 0;
-    margin: 0;
-}
-
-.pestanas a {
-    flex: 1;
-    text-align: center;
-    padding: 10px;
+.nav-menu li a {
+    color: #fff;
     text-decoration: none;
-    font-size: 20px;
-    color: #333;
-    cursor: pointer;
-    border-right: 1px solid #c3c3c3;
-    padding-left: 2px;
-    margin-right: 1px;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 10px;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 5px;
 }
 
-.pestanas a:hover {
-    background-color: #aaaaaa !important;
+.nav-menu li a:hover {
+    background-color: #fff;
+    color: #00274d;
+    border-radius: 5px;
 }
 
-.pestanas a.active {
-    background-color: #0459A1;
-    color: white;
+
+.content {
+    display: none; /* Ocultar todos los contenedores */
 }
+
+.content.active {
+    display: block; /* Mostrar solo el contenedor activo */
+}
+
+
+
+/*-------------------- Login -------------------------*/
+
+.contendorFlexRowLogin {
+    display: flex;
+    flex-direction: column; 
+    justify-content: flex-start; 
+    margin-right: 10px;
+}
+
+#loginNombre {
+    font-size: 18px; 
+    font-weight: bold; 
+    margin-bottom: 5px; 
+    color: #FFFFFF !important;
+    margin-bottom: -5px; 
+}
+
+#loginCorreo {
+    font-size: 12px; 
+    color: #FFFFFF !important;;
+    margin: 0; 
+    text-align: right;
+}
+
+
+
+
+/* ---------------- Tabla Contador de Licencias ------------------ */
+
+
 
 .titulo {
     padding: 2px;
@@ -90,14 +173,15 @@ body {
     flex-grow: 1;
     font-family: 'Roboto Slab', serif;
     color: black;
-    margin-left: -110px;
+    
 }
+
 
 /*----------------------- Cargando -------------------------------*/
 
 .swal2-popup.swal2-noanimation {
-    background: rgba(0, 0, 0, 0.8); /* Fondo oscuro transparente */
-    border-radius: 15px; /* Esquinas redondeadas */
+    background: rgba(0, 0, 0, 0.8); 
+    border-radius: 15px; 
     padding: 15px;
   }
   
@@ -177,6 +261,7 @@ body {
     background-color: rgb(255, 255, 255);
     box-shadow: 0px 2px 2px 0px #c9c9c9;
     border: 0.5px solid rgb(193, 193, 193);
+    padding-right: 7px;
 }
 
 .tituloContainerInfo {
@@ -186,6 +271,8 @@ body {
     font-family: "Arsenal SC", sans-serif;
     font-style: normal;
     text-align: left;
+    color: #00274d !important;
+    font-weight:lighter;
 }
 
 .contenedorFlex {
@@ -194,6 +281,15 @@ body {
     align-items: center !important;
     gap: 10px;
 }
+
+.contenedorFlex2FA {
+    display: flex;               /* Activa Flexbox */
+    flex-direction: row;         /* Asegura que los elementos estén en fila horizontal */
+    justify-content: space-between; /* Espacia los elementos uniformemente */
+    gap: 10px;                   /* Espacio entre los elementos */
+    align-items: flex-start;     /* Alinea los elementos arriba */
+}
+
 
 .containerTablaLicenciasUso {
     width: 50%;
@@ -205,8 +301,8 @@ body {
 
 #graficoLicencias {
     height: auto;
-    min-width: 700px;
-    min-height: 300px;
+    min-width: 800px;
+    min-height: 400px;
     padding-right: 50px;
 }
 
@@ -219,7 +315,7 @@ body {
     border: 0.5px solid #ccc;
     padding: 8px;
     text-align: center;
-    background-color: #0459A1;
+    background: radial-gradient(circle, #0071aa, #005d8b);
 }
 
 .containerTablaLicenciasUso table {
@@ -282,12 +378,15 @@ body {
 
 .card-body {
     padding: 9px;
+    border: solid 1px rgb(70, 70, 70);
+    border-radius: 5px;
 }
 
 
 .card-title {
     font-size: 1.7rem; 
     margin-bottom: 8px;
+    color: #00274d !important;
 }
 
 .form-group {
@@ -320,19 +419,19 @@ body {
     margin: 3px;
     padding: 3px 7px;
     border-radius: 5px;
-    background-color: #d3d3d3; /* Color gris suave */
-    color: #000; /* Color del texto */
+    background-color: #d3d3d3; 
+    color: #000; 
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 #grupo1 input[type="radio"] {
-    display: none; /* Ocultar los botones de radio */
+    display: none;
 }
 
 #grupo1 input[type="radio"]:checked + label {
-    background-color: #0459A1; /* Color para la opción seleccionada */
-    color: #fff; /* Color del texto para la opción seleccionada */
+    background-color: #0459A1; 
+    color: #fff; 
 }
 
 .btn-secondary {
@@ -358,10 +457,14 @@ body {
     }
 }
 
+#sincronizarFechaSesionBtn, #sincronizarBtn, #exportBtn {
+    border-radius: 6px;
+}
+
 /* --------------------- Opciones --------------------------------- */
 
 .rotar {
-    animation: girarReverso 2s linear infinite;
+    animation: girarReverso 1.0s linear infinite;
 }
 
 @keyframes girarReverso {
@@ -369,7 +472,7 @@ body {
         transform: rotate(0deg);
     }
     100% {
-        transform: rotate(-360deg); 
+        transform: rotate(360deg); 
     }
 }
 
@@ -390,31 +493,29 @@ input[type="search"].form-control.form-control-sm[aria-controls="tablaUsuarios"]
 }
 
 #tablaUsuarios,
-#tablaMovimientosLicencia {
-    width: 100%;
+#tablaMovimientosLicencia, .tablas2FA {
+    width: 100% !important;
     border: 0.5px solid #474747;
-    border-collapse: collapse;
 }
 
 #tablaUsuarios th,
-#tablaMovimientosLicencia th {
+#tablaMovimientosLicencia th, .tablas2FA th {
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 12px;
     color: #fff;
     text-transform: uppercase;
     border: 0.5px solid #ccc;
     padding: 8px;
     text-align: center;
-    background-color: #0459A1;
+    background: radial-gradient(circle, #0071aa, #005d8b);
 }
 
 #tablaUsuarios th {
-    font-size: 14px;
+    font-size: 12px;
 }
-
 #tablaUsuarios td,
-#tablaMovimientosLicencia td {
+#tablaMovimientosLicencia td, .tablas2FA td {
     font-size: 12px;
     border: 0.5px solid #ccc;
     padding: 6px;
@@ -422,9 +523,15 @@ input[type="search"].form-control.form-control-sm[aria-controls="tablaUsuarios"]
 }
 
 #tablaUsuarios tbody tr:nth-child(even),
-#tablaMovimientosLicencia tbody tr:nth-child(even) {
+#tablaMovimientosLicencia tbody tr:nth-child(even), 
+.tablas2FA tbody tr:nth-child(even) {
     background-color: #f9f9f9;
 }
+
+.containerTablaUsuarios{
+    padding-bottom: 20px;
+}
+
 
 /*----------------------- Sweetalert2 -------------------------------*/
 
@@ -447,5 +554,416 @@ input[type="search"].form-control.form-control-sm[aria-controls="tablaUsuarios"]
 }
 
 
+
+
+/*---------------------------------------- MODULO - 2FA ------------------------------------*/
+
+.containerCargarArchivo {
+    border: 2px solid #007ACC;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 10px auto; /* Centra el contenedor */
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px; /* Controla el ancho máximo del contenedor */
+    width: 100%; /* Asegura que el contenedor use todo el ancho disponible dentro del máximo */
+}
+
+.tituloCargarArchivo {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #007ACC;
+    text-align: center;
+    margin: 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #007ACC;
+}
+
+.instruccionesArchivo {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    color: #333;
+    margin-top: 10px; /* Espacio entre el título y el texto */
+    margin-bottom: 0; /* Elimina el margen inferior para evitar espacio innecesario */
+    text-align: justify; /* Alinea el texto de manera justificada */
+}
+
+
+
+
+.contenedorInfo2FA {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* Espacio entre los elementos */
+}
+
+.contenedorCargarArchivo2FA{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border: 1px solid #b3b3b3;
+    padding: 20px;
+    align-items: center;
+    background-color: #eeeeee;
+}
+
+.containerArchivo2FA {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border: 2px solid #007ACC;
+    border-radius: 8px;
+    padding: 20px;
+    align-items: center;
+    margin: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  #archivoUsuario2FA {
+    display: none;
+  } 
+
+  .cargarArchivo {
+    padding: 10px 20px;
+    background-color: #0459A1; /* Color de fondo actualizado */
+    border: 1px solid #0459A1; /* Borde actualizado */
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s;
+    border-radius: 5px;
+    font-family: "Quicksand", sans-serif;
+  }
+  
+  .cargarArchivo:hover {
+    background-color: #033c6b; /* Color de fondo para el estado hover */
+    border: 1px solid #033c6b; /* Borde para el estado hover */
+    color: #ffffff;
+  }
+  
+#nombreArchivo2FA {
+    margin-top: 10px;
+    font-size: 20px;
+    font-family: "Quicksand", sans-serif;
+  }
+
+
+
+
+
+    /* ------------------------------------------------------- CONTENEDOR CON PETAÑAS - 2FA -----------------------------------------*/
+
+/* Contenedor de las pestañas */
+.tab-container {
+    width: 100%;
+    margin: 10px auto;
+}
+
+/* Estilos para las pestañas */
+.tabs {
+    display: flex;
+    cursor: pointer;
+    background-color: #f7f7f7;
+    border-bottom: 2px solid #ccc; /* Línea inferior para todo el contenedor de pestañas */
+}
+
+/* Estilos para los botones de las pestañas */
+.tab-button {
+    flex: 1;
+    padding: 5px;
+    border: none;
+    border-bottom: 2px solid #3498db; /* Borde inferior azul por defecto */
+    background: #f0f0f0;
+    text-align: center;
+    outline: none;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+    font-size: 17px;
+    font-family: "Arsenal SC", sans-serif;
+    color: #555;
+    box-shadow: none; /* Elimina cualquier sombra que pueda causar un borde oscuro */
+
+}
+
+.tab-button:focus {
+    outline: none; /* Elimina el borde de enfoque que aparece al seleccionar */
+}
+
+.tab-button:hover {
+    background-color: #e0e0e0; /* Suave cambio de color al pasar el mouse */
+}
+
+/* Estilo para el botón activo (seleccionado) */
+.tab-button.active {
+    background-color: #ffffff;
+    border: 2px solid #3498db; /* Borde azul que rodea el botón activo */
+    border-bottom: none; /* Sin borde inferior para que parezca conectado al contenido */
+    border-radius: 4px 4px 0 0; /* Bordes redondeados en la parte superior */
+    color: #3498db; /* Cambiar color del texto en la pestaña activa */
+}
+
+/* Estilos para el contenido de las pestañas */
+.tab-content {
+    border: 2px solid #F0F0F0; /* Borde azul conectando con la pestaña activa */
+    border-top: none; /* Conexión sin duplicar el borde superior */
+    padding: 20px;
+    background-color: #F0F0F0;
+    border-radius: 0 0 4px 4px; /* Bordes redondeados en la parte inferior */
+}
+
+.tab-content-item {
+    display: none;
+}
+
+.tab-content-item.active {
+    display: block;
+}
+
+
+
+
+/*Estilos para las tablas y graficos dentro del contenedor*/
+
+.contenedorGraficoTabla {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px; /* Espacio entre el gráfico y la tabla */
+    margin-bottom: 20px;
+}
+
+.graficos2FA {
+    flex: 1; /* El gráfico ocupará el espacio necesario según su contenido */
+    max-width: 45%; /* Limita el ancho máximo del gráfico */
+}
+
+.tablas2FAContainer {
+    flex: 1; /* La tabla ocupará el espacio restante */
+}
+
+.tablas2FA {
+    width: 100% !important; /* Hace que la tabla ocupe todo el ancho del contenedor */
+    margin-left: auto; /* Centra la tabla si hay espacio sobrante */
+    margin-right: auto;
+    table-layout: auto; 
+}
+
+
+/* Graficos estado 2FA */
+
+/* Establecer el tamaño de los gráficos */
+.graficos2FA {
+    max-width: 500px; /* Ancho máximo de los gráficos */
+    max-height: 500px; /* Alto máximo de los gráficos */
+    width: 100%; /* Ajustar el gráfico al 100% del contenedor */
+    height: auto; /* Mantener la proporción del gráfico */
+    margin-right: 10px;
+}
+
+
+
+/* Mensaje sobre la valides del archivo */
+
+  .resultadoRevisionArchivo {
+    display: none; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.animacion {
+    font-size: 80px;
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.animacion.ok {
+    color: green;
+}
+
+.animacion.error {
+    color: red;
+}
+
+.animacion.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.mensaje {
+    margin-top: 10px;
+    font-size: 18px;
+    opacity: 0;
+    transition: opacity 0.5s;
+    font-family: "Quicksand", sans-serif;
+}
+
+.mensaje.visible {
+    opacity: 1;
+}
+
+
+.contenedorGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Define dos columnas de igual tamaño */
+    grid-template-rows: auto auto auto; /* Define tres filas de tamaño automático */
+    gap: 6px; /* Espacio entre los elementos */
+}
+
+.contenedorGrid .actualizacionContenedor:first-child {
+    grid-column: 1 / -1; /* Este elemento ocupa toda la fila, de la primera a la segunda columna */
+}
+
+.contenedorGrid {
+    margin-right: 10px; /* Espacio entre el primer y segundo elemento */
+}
+
+
+.contendorFlexRow{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/*/////////////////////////////*/
+
+
+  .texto-valido {
+    color: #007700;
+  }
+  
+  .texto-no-valido {
+    color: #ff0000;
+  }
+  
+  .texto-normal {
+    color: #000000;
+  }
+
+  .btnEjecutar {
+    margin-top: 10px !important;
+    font-weight: bold !important;
+    padding: 10px 20px !important;
+    transition: background-color 0.3s ease !important;
+    width: 400px !important;
+    height: 50px !important;
+    font-size: 20px !important;
+    margin-bottom: 10px !important;
+  }
+  
+  .btnEjecutar.habilitado {
+    background-color: #034388 !important;
+    color: #fff !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: background-color 0.3s;
+  }
+  
+  .btnEjecutar.habilitado:hover {
+    background-color: #333333 !important;
+    color: #fff !important;
+    border: none !important;
+    cursor: pointer !important;
+  }
+  
+  .btnEjecutar.deshabilitado {
+    background-color: #ccc !important;
+    color: #999 !important;
+    cursor: not-allowed !important;
+  }
+
+
+  /*////////////////////////////////////////////////////*/
+
+  /* Contenedor de la sección de actualización */
+.actualizacionContenedor {
+    background-color: #f9f9f9; /* Color de fondo suave */
+    border: 1px solid #ddd; /* Borde sutil */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    width: 100%;
+}
+
+/* Título de la sección */
+.tituloEstadisticas2FA {
+    font-size: 1.2rem;
+    color: #333; /* Color del texto */
+    margin-bottom: 20px; /* Espacio debajo del título */
+}
+
+/* Fecha y hora */
+.fechaHora {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #0459A1; /* Color de la fecha y hora */
+}
+
+
+  /* Footer -  */
+
+/* Asegura que el html y body ocupen el 100% de la altura de la ventana */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Asegura que el contenedor principal ocupe toda la altura disponible */
+.page-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* El contenido principal ocupa el espacio restante */
+.content {
+    flex: 1;
+    /* Añadir margen o relleno si es necesario para el contenido */
+}
+
+/* Estilos del footer */
+.footer {
+    background-color: #00BB7E;
+    padding: 20px;
+    text-align: center;
+    color: white;
+    font-family: Arial, sans-serif;
+    /* El footer se posiciona en el fondo gracias a la estructura de flexbox */
+}
+
+
+/*Buscador de la seccion excluidos*/
+
+/* Estilo para el formulario de búsqueda */
+.form-group {
+    margin-bottom: 20px;
+}
+
+#usuarioSelect {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Estilo para los botones */
+.button-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.button-group .btn {
+    margin-right: 10px;
+    width: 150px;
+}
 
 
