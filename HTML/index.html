@@ -1,102 +1,108 @@
 <!DOCTYPE html>
 <html lang="es" data-bs-theme="dark">
 
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Icontec</title>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Icontec</title>
 
-        <!-- Estilos Librerias -->
-        <link rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css">
+    <!-- Estilos Librerias -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css">
 
-        <!-- DataTables -->
-        <link rel="stylesheet"
-            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css"
-            href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 
-        <!-- Estilos -->
-        <link rel="stylesheet"
-            href="../../JairoSevilla/SiteAssets/InformesEntraID/CSS/estilos.css">
-        <link rel="stylesheet"
-            href="../../JairoSevilla/SiteAssets/InformesEntraID/CSS/main.css">
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../../JairoSevilla/SiteAssets/InformesEntraID/CSS/estilos.css">
+    <link rel="stylesheet" href="../../JairoSevilla/SiteAssets/InformesEntraID/CSS/main.css">
 
-    </head>
+</head>
 
-    <body>
+<body>
 
-        <main class="page-content pt-2">
-            <div class="containerPrincipal">
+    <main class="page-content pt-2">
+        <div class="containerPrincipal">
 
-                <div class="titulo">
-                    <img
-                        src="../../JairoSevilla/SiteAssets/InformesEntraID/IMAGENES/logo_icontec.png"
-                        alt="Logo Icontec">
-                    <h1>SIME ICONTEC</h1>
+            <!-------------------------- Header -------------------------------->
+
+            <header class="header">
+                <div class="header-left">
+                    <img src="../../JairoSevilla/SiteAssets/InformesEntraID/IMAGENES/logo_icontec.png" alt="Logo"
+                        class="logo">
+                    <button class="btn-header">SIME ICONTEC</button>
                 </div>
 
-                <div class="cabecera">
-                    <div class="pestanas">
-                        <a href="#" class="pestana active"
-                            onclick="mostrarContenido(event, 'contenido-tablas')">
-                            <span class="icono-tablas"></span>
-                            Licenciamiento Microsoft 365
-                        </a>
-                        <a href="#" class="pestana"
-                            onclick="mostrarAlerta('¡Aviso!', 'El modulo se encuentra en fase de desarrollo.', 'warning')">
-                            <span class="icono-graficos"></span>
-                            Doble Factor de Autenticación
-                        </a>
+                <nav class="header-nav">
 
-                    </div>
+                    <ul class="nav-menu">
+                        <li><a href="#" data-target="licencias">Licencias</a></li>
+                        <li><a href="#" data-target="usuarios">Usuarios</a></li>
+                        <li><a href="#" data-target="mfaUsuario">MFA, Usuario</a></li>
+                        <li><a href="javascript:void(0)" data-target="" aria-disabled="true"
+                                style="pointer-events: none; color: gray; text-decoration: none; cursor: not-allowed;">MFA,
+                                Directiva</a></li>
+                        <li><a href="javascript:void(0)" data-target="" aria-disabled="true"
+                                style="pointer-events: none; color: gray; text-decoration: none; cursor: not-allowed;">Configuraci&oacute;n</a>
+                        </li>
+                    </ul>
+
+                </nav>
+
+                <div class="contendorFlexRowLogin">
+                    <h2 id="loginNombre"></h2>
+                    <h2 id="loginCorreo">
+                    </h2>
+
                 </div>
 
-                <!----- Tablas ------->
+
+            </header>
+
+            <!----- Tablas ------->
+
+            <div id="licencias" class="content"> <!-------- Contenedor Licencias-------------->
 
                 <div class="containerInfo">
+
                     <h2 class="tituloContainerInfo"> Licencias</h2>
+
                     <div class="contenedorFlex">
+
                         <div class="containerTablaLicenciasUso">
-                            <table id="tablaEstadoLicencias"
-                                class="table table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Licencia</th>
-                                        <th>Disponibles</th>
-                                        <th>En Uso</th>
-                                        <th>Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Datos de la tabla -->
-                                </tbody>
+
+                            <table id="tablaEstadoLicencias" class="table table-striped">
+                                <thead></thead>
+                                <tbody></tbody>
                             </table>
                         </div>
 
-                        <div>
+                        <div class="contenedorGrafico">
                             <canvas id="graficoLicencias"></canvas>
                         </div>
                     </div>
                 </div>
+
+            </div>
+
+            <div id="usuarios" class="content"> <!-------- Contenedor Usuarios--------------->
+
 
                 <div class="containerInfo containerTablaUsuarios">
                     <h2 class="tituloContainerInfo"> Usuarios</h2>
 
                     <div class="containerFiltros">
 
-                        <div class="card" style="width: 45%;">
+                        <div class="card" style="width: 35%;">
                             <div class="card-body">
                                 <h2 class="card-title">Filtro</h2>
 
                                 <div class="contenedorFlexFiltros">
 
                                     <div class="form-group">
-                                        <label
-                                            for="filtroUsuarios">Usuarios:</label>
-                                        <select class="form-control"
-                                            id="filtroUsuarios">
+                                        <label for="filtroUsuarios">Usuarios:</label>
+                                        <select class="form-control" id="filtroUsuarios">
                                             <option value="todos">Todos los
                                                 usuarios</option>
                                             <option value="conLicencia">Usuarios
@@ -107,81 +113,79 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label
-                                            for="filtroLicencias">Licencias:</label>
+                                        <label for="filtroLicencias">Licencias:</label>
                                         <select class="form-control" id="filtroLicencias">
                                             <!-- Otras opciones de licencia se agregarán aquí -->
                                         </select>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="filtroEstadoSesion">Inicio de sesión:</label>
-                                        <select class="form-control" id="filtroEstadoSesion" disabled>
-                                            <option value="todos">Todos los estados</option>
-                                            <option value="habilitado">Habilitado</option>
-                                            <option value="bloqueado">Bloqueado</option>
-                                        </select>
-                                    </div>
-                                    
-                                    
                                 </div>
 
+                            </div>
+                        </div>
+
+                        <div class="card" style="width: 30%;">
+                            <div class="card-body">
+                                <h2 class="card-title">Estadísticas</h2>
+                                <div class="contenedorFlexFiltros">
+                                    <div class="form-group aplicarFlex bordeDerecho">
+                                        <label for="totalUsuarios">Total
+                                            Usuarios</label>
+                                        <span id="totalUsuarios" class="datosEstadisticas">0</span>
+                                    </div>
+                                    <div class="form-group aplicarFlex bordeDerecho">
+                                        <label for="usuariosConLicencia">Con
+                                            Licencias</label>
+                                        <span id="usuariosConLicencia" class="datosEstadisticas">0</span>
+                                    </div>
+
+                                    <div class="form-group aplicarFlex bordeDerecho">
+                                        <label for="usuariosLicenciaBloqueado">Bloqueados</label>
+                                        <span id="usuariosLicenciaBloqueado" class="datosEstadisticas"
+                                            style=" color: rgb(218, 23, 49);">0</span>
+                                    </div>
+                                    <div class="form-group aplicarFlex">
+                                        <label for="usuariosFiltrados">Datos
+                                            Filtrados</label>
+                                        <span id="usuariosFiltrados" class="datosEstadisticas"
+                                            style=" color: rgb(0, 11, 109);">0</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div class="card" style="width: 35%;">
                             <div class="card-body">
-                                <h2 class="card-title">Estadísticas</h2>
-                                <div class="contenedorFlexFiltros">
-                                    <div class="form-group aplicarFlex bordeDerecho">
-                                        <label for="totalUsuarios">Total Usuarios</label>
-                                        <span id="totalUsuarios" class="datosEstadisticas">0</span>
-                                    </div>
-                                    <div class="form-group aplicarFlex bordeDerecho">
-                                        <label for="usuariosConLicencia">Con Licencias</label>
-                                        <span id="usuariosConLicencia" class="datosEstadisticas">0</span>
-                                    </div>
-                                    <div class="form-group aplicarFlex bordeDerecho">
-                                        <label for="usuariosSinLicencia">Sin Licencias</label>
-                                        <span id="usuariosSinLicencia" class="datosEstadisticas">0</span>
-                                    </div>
-                                    <div class="form-group aplicarFlex bordeDerecho">
-                                        <label for="usuariosLicenciaBloqueado">Bloqueados</label>
-                                        <span id="usuariosLicenciaBloqueado" class="datosEstadisticas" style=" color: rgb(218, 23, 49);">0</span>
-                                    </div>
-                                    <div class="form-group aplicarFlex">
-                                        <label for="usuariosFiltrados">Datos Filtrados</label>
-                                        <span id="usuariosFiltrados" class="datosEstadisticas" style=" color: rgb(0, 11, 109);">0</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        
-                        <div class="card" style="width: 20%;">
-                            <div class="card-body">
                                 <h2 class="card-title">Opciones</h2>
                                 <div class="contenedorFlexFiltros" style="margin-top: 23px;">
 
                                     <div class="form-group">
-                                        <button id="exportBtn"
+                                        <button id="sincronizarFechaSesionBtn"
                                             style="display: flex; align-items: center;">
-                                            <img
-                                                src="../../JairoSevilla/SiteAssets/InformesEntraID/IMAGENES/logo_excel.png"
-                                                alt="Exportar usuarios a Excel"
-                                                style="width: 30px; height: 30px; margin-right: 8px;">
-                                            Exportar
+                                            <img id="iconoSincronizarFechaSesion"
+                                                src="../../JairoSevilla/SiteAssets/InformesEntraID/IMAGENES/descargar_info.png"
+                                                alt="Descargar Ultimo Inicio de Sesión"
+                                                style="width: 40px; height: 40px; margin-right: 8px;">
+                                            Descargar Ultima Conexión
                                         </button>
                                     </div>
 
                                     <div class="form-group">
                                         <button id="sincronizarBtn" style="display: flex; align-items: center;">
-                                            <img
-                                                id="iconoSincronizar"
-                                                src="../../JairoSevilla/SiteAssets/InformesEntraID/IMAGENES/refresh_reload_icon.png"
+                                            <img id="iconoSincronizar"
+                                                src="../../JairoSevilla/SiteAssets/InformesEntraID/IMAGENES/descargarII_info.png"
                                                 alt="Sincronizar actualizaciones"
-                                                style="width: 30px; height: 30px; margin-right: 8px;">
-                                            Actualizar Usuarios
+                                                style="width: 40px; height: 40px; margin-right: 8px;">
+                                            Actualizar Tabla
+                                        </button>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button id="exportBtn" style="display: flex; align-items: center;">
+                                            <img src="../../JairoSevilla/SiteAssets/InformesEntraID/IMAGENES/logo_excel.png"
+                                                alt="Exportar usuarios a Excel"
+                                                style="width: 40px; height: 40px; margin-right: 8px;">
+                                            Exportar
                                         </button>
                                     </div>
 
@@ -190,11 +194,9 @@
                             </div>
                         </div>
 
-
                     </div>
 
-                    <table id="tablaUsuarios"
-                        class="table table-striped table-bordered">
+                    <table id="tablaUsuarios" class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th>Nombre Completo</th>
@@ -205,6 +207,7 @@
                                 <th>Licencias</th>
                                 <th>Login</th>
                                 <th>Fecha de Creación</th>
+                                <th>Última Actividad de Inicio de Sesión</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -213,62 +216,418 @@
                     </table>
                 </div>
 
+
+
+                <div class="containerInfo containerTablaUsuarios">
+                    <h2 class="tituloContainerInfo">Usuarios Creados en los Últimos
+                        45 Días</h2>
+
+                    <table id="tablaMovimientosLicencia" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Fecha de Creación</th>
+                                <th>Nombre Completo</th>
+                                <th>Correo Electrónico</th>
+                                <th>Cargo</th>
+                                <th>Licencias</th>
+                                <th>Ubicación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Datos de la tabla -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <div class="containerInfo containerTablaUsuarios">
-                <h2 class="tituloContainerInfo"> Movimientos de Licencias -
-                    Beta</h2>
 
-                <table id="tablaMovimientosLicencia"
-                    class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Fecha y Hora</th>
-                            <th>Usuario Afectado</th>
-                            <th>Actor</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Datos de la tabla -->
-                    </tbody>
-                </table>
+            <!--CONTENEDOR PARA LA INFORMACIÓN SOBRE EL 2FA-->
+
+            <div id="mfaUsuario" class="content"> <!-------- Contenedor MFA Usuario-------------->
+
+                <div class="containerInfo container2FA">
+
+                    <h2 class="tituloContainerInfo"> Autenticación multifactor
+                        (MFA)</h2>
+
+                    <div class="tab-container">
+                        <!-- Pestañas -->
+                        <div class="tabs">
+                            <button class="tab-button active" data-tab="tab1">Inicio</button>
+                            <button class="tab-button" data-tab="tab2">Icontec.Org</button>
+                            <button class="tab-button" data-tab="tab3">Icontec.Net</button>
+                            <button class="tab-button" data-tab="tab4">Otros
+                                Dominios</button>
+                            <button class="tab-button" data-tab="tab5">Gestión de
+                                Exclusión/Inclusión MFA</button>
+                        </div>
+
+                        <!-- Contenido de las pestañas -->
+                        <div class="tab-content">
+                            <div id="tab1" class="tab-content-item active">
+
+                                <!-- Contenido de la pestaña 1 -->
+
+                                <div class="contenedorInfo2FA">
+
+                                    <div class="contenedorGrid">
+                                        <div class="actualizacionContenedor">
+                                            <div class="tituloEstadisticas2FA">Última
+                                                Actualización</div>
+                                            <div class="fechaHora" id="ultimaFechaActualizacion">0</div>
+                                        </div>
+
+                                        <div class="actualizacionContenedor">
+                                            <div class="tituloEstadisticas2FA">Total
+                                                Usuarios</div>
+                                            <div class="fechaHora" id="totalUsuarios2FA">0</div>
+                                        </div>
+
+                                        <div class="actualizacionContenedor">
+                                            <div class="tituloEstadisticas2FA">MFA
+                                                Habilitado</div>
+                                            <div class="fechaHora" id="habilitadoUsuarios2FA">0</div>
+                                        </div>
+
+                                        <div class="actualizacionContenedor">
+                                            <div class="tituloEstadisticas2FA">MFA
+                                                Deshabilitado</div>
+                                            <div class="fechaHora" id="inhabilitadoUsuarios2FA">0</div>
+                                        </div>
+
+                                        <div class="actualizacionContenedor">
+                                            <div class="tituloEstadisticas2FA">Cuentas
+                                                Excluidas</div>
+                                            <div class="fechaHora" id="excluidasUsuarios2FA">0</div>
+                                        </div>
+
+                                        <div class="actualizacionContenedor">
+                                            <div class="tituloEstadisticas2FA">MFA
+                                                Desconocido</div>
+                                            <div class="fechaHora" id="DesconocidoUsuarios2FA">0</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="graficos2FA">
+                                        <canvas id="grafico2FAIcontecTotal"></canvas>
+                                    </div>
+
+                                    <div class="contenedorCargarArchivo2FA">
+
+                                        <div class="containerCargarArchivo">
+                                            <h3 class="tituloCargarArchivo">Actualización
+                                                MFA</h3>
+                                            <p class="instruccionesArchivo">
+                                                Por favor, cargue un archivo en
+                                                formato CSV. El archivo debe
+                                                contener dos columnas:
+                                                <strong>ID del Usuario</strong> y
+                                                <strong>Estado</strong> (donde el
+                                                estado debe ser
+                                                <strong>Habilitado</strong> o
+                                                <strong>Deshabilitado</strong>).
+                                            </p>
+                                        </div>
+
+                                        <div class="containerArchivo2FA">
+                                            <input type="file" id="archivoUsuario2FA" onchange=" validarArchivo2FA()">
+                                            <label for="archivoUsuario2FA" class="cargarArchivo">
+                                                Cargar archivo
+                                            </label>
+                                            <div id="nombreArchivo2FA">Ning&#xFA;n
+                                                archivo
+                                                seleccionado</div>
+                                        </div>
+
+                                        <div class="resultadoRevisionArchivo" id="resultadoRevisionArchivo">
+                                            <div class="animacion" id="animacionResultado">
+                                                <!-- El contenido dinámico (X o ✓) se insertará aquí -->
+                                            </div>
+                                            <div class="mensaje" id="mensajeResultado">
+                                                <!-- El mensaje dinámico se insertará aquí -->
+                                            </div>
+                                        </div>
+
+                                        <div class="containerDosEmpleados">
+                                            <div class="btnActualizar">
+                                                <input onclick="ejecutarActualizacion2FA()"
+                                                    class="cargarArchivo btnEjecutar deshabilitado" type="button"
+                                                    id="btnIniciarActualizacion2FA" value="Iniciar actualizaci&#xF3;n"
+                                                    disabled />
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div id="tab2" class="tab-content-item">
+
+                                <div class="contenedorGraficoTabla">
+
+                                    <div class="contendorFlexRow">
+
+                                        <div class="actualizacionContenedor">
+                                            <div class="tituloEstadisticas2FA">Total
+                                                Usuarios</div>
+                                            <div class="fechaHora" id="totalUsuarios2FA_ORG">0</div>
+                                        </div>
+
+                                        <div class="actualizacionContenedor">
+                                            <div class="tituloEstadisticas2FA">MFA
+                                                Habilitado</div>
+                                            <div class="fechaHora" id="habilitadoUsuarios2FA_ORG">0</div>
+                                        </div>
+
+                                        <div class="actualizacionContenedor">
+                                            <div class="tituloEstadisticas2FA">MFA
+                                                Deshabilitado</div>
+                                            <div class="fechaHora" id="deshabilitadoUsuarios2FA_ORG">0</div>
+                                        </div>
+
+                                        <div class="actualizacionContenedor">
+                                            <div class="tituloEstadisticas2FA">MFA
+                                                Desconocido</div>
+                                            <div class="fechaHora" id="desconocidoUsuarios2FA_ORG">0</div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="graficos2FA">
+                                        <canvas id="grafico2FAIcontecOrg"></canvas>
+                                    </div>
+
+                                    <div class="tablas2FAContainer">
+                                        <table id="2FAIcontecOrg" class="tablas2FA table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nombre Completo</th>
+                                                    <th>Usuario</th>
+                                                    <th>Cargo</th>
+                                                    <th>Inicio de Sesión</th>
+                                                    <th>Estado 2FA</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Los datos se insertarán aquí dinámicamente con DataTables -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div id="tab3" class="tab-content-item">
+                                <div class="contenedorGraficoTabla">
+
+                                    <div class="contendorFlexRow">
+
+                                        <div class="actualizacionContenedor">
+                                            <div class="tituloEstadisticas2FA">Total
+                                                Usuarios</div>
+                                            <div class="fechaHora" id="totalUsuarios2FA_NET">0</div>
+                                        </div>
+
+                                        <div class="actualizacionContenedor">
+                                            <div class="tituloEstadisticas2FA">MFA
+                                                Habilitado</div>
+                                            <div class="fechaHora" id="habilitadoUsuarios2FA_NET">0</div>
+                                        </div>
+
+                                        <div class="actualizacionContenedor">
+                                            <div class="tituloEstadisticas2FA">MFA
+                                                Deshabilitado</div>
+                                            <div class="fechaHora" id="deshabilitadoUsuarios2FA_NET">0</div>
+                                        </div>
+
+                                        <div class="actualizacionContenedor">
+                                            <div class="tituloEstadisticas2FA">MFA
+                                                Desconocido</div>
+                                            <div class="fechaHora" id="desconocidoUsuarios2FA_NET">0</div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="graficos2FA">
+                                        <canvas id="grafico2FAIcontecNet"></canvas>
+                                    </div>
+                                    <div class="tablas2FAContainer">
+                                        <table id="2FAIcontecNet" class="tablas2FA table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nombre Completo</th>
+                                                    <th>Usuario</th>
+                                                    <th>Cargo</th>
+                                                    <th>Inicio de Sesión</th>
+                                                    <th>Estado 2FA</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Los datos se insertarán aquí dinámicamente con DataTables -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="tab4" class="tab-content-item">
+                                <div class="contenedorGraficoTabla">
+
+                                    <div class="contendorFlexRow">
+
+                                        <div class="actualizacionContenedor">
+                                            <div class="tituloEstadisticas2FA">Total
+                                                Usuarios</div>
+                                            <div class="fechaHora" id="totalUsuarios2FA_OTROS">0</div>
+                                        </div>
+
+                                        <div class="actualizacionContenedor">
+                                            <div class="tituloEstadisticas2FA">MFA
+                                                Habilitado</div>
+                                            <div class="fechaHora" id="habilitadoUsuarios2FA_OTROS">0</div>
+                                        </div>
+
+                                        <div class="actualizacionContenedor">
+                                            <div class="tituloEstadisticas2FA">MFA
+                                                Deshabilitado</div>
+                                            <div class="fechaHora" id="deshabilitadoUsuarios2FA_OTROS">0</div>
+                                        </div>
+
+                                        <div class="actualizacionContenedor">
+                                            <div class="tituloEstadisticas2FA">MFA
+                                                Desconocido</div>
+                                            <div class="fechaHora" id="desconocidoUsuarios2FA_OTROS">0</div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="graficos2FA">
+                                        <canvas id="grafico2FAIcontecOtros"></canvas>
+                                    </div>
+                                    <div class="tablas2FAContainer">
+                                        <table id="2FAIcontecOtros"
+                                            class="tablas2FA table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nombre Completo</th>
+                                                    <th>Usuario</th>
+                                                    <th>Cargo</th>
+                                                    <th>Inicio de Sesión</th>
+                                                    <th>Estado 2FA</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Los datos se insertarán aquí dinámicamente con DataTables -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="tab5" class="tab-content-item">
+                                <!-- Contenido de la pestaña 5 -->
+                                <div class="contenedorFlex2FA">
+
+                                    <!-- Desplegable para seleccionar usuarios -->
+
+                                    <div class="contendorFlexRow">
+
+                                        <div class="form-group">
+                                            <label for="usuarioSelect" style="font-size: 20px;">Usuarios:</label>
+                                            <input type="text" id="usuarioSearch" class="form-control"
+                                                placeholder="Buscar por correo..." autocomplete="off">
+                                            <select id="usuarioSelect" class="form-control" size="10">
+                                                <!-- Opciones se llenarán dinámicamente -->
+                                            </select>
+                                        </div>
+
+                                        <!-- Botones para excluir y reincluir -->
+                                        <div class="button-group">
+                                            <button id="btnExcluir" class="btn btn-danger">Excluir
+                                                del MFA</button>
+                                            <button id="btnReincluir" class="btn btn-success">Reincluir
+                                                en MFA</button>
+                                        </div>
+
+                                        <div>
+                                            <button id="btnResetear2FA" class="btn btn-danger">Reiniciar
+                                                configuración MFA</button>
+                                        </div>
+
+                                    </div>
+                                    <!-- Tabla para mostrar datos de 2FA excluidos -->
+                                    <div class="tablas2FAContainer">
+                                        <table id="2FAIcontecExcluidos"
+                                            class="tablas2FA table table-striped table-bordered"
+                                            style="width: 100% !important;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nombre Completo</th>
+                                                    <th>Usuario</th>
+                                                    <th>Cargo</th>
+                                                    <th>Inicio de Sesión</th>
+                                                    <th>Estado 2FA</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Los datos se insertarán aquí dinámicamente con DataTables -->
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
 
-        </main>
+            <!-- <footer class="footer">
+                <p>Departamento de Tecnología Icontec</p>
+            </footer> -->
+        </div>
+    </main>
 
-        <!-- jquery-3.7.1 -->
-        <script
-            src="../../JairoSevilla/SiteAssets/InformesEntraID/LIBRERIAS/jquery/jquery-3.7.1.min.js"></script>
-        <!-- sweetalert2 -->
-        <script
-                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <!-- msal-browser -->
-        <script
-            src="https://alcdn.msauth.net/browser/2.20.0/js/msal-browser.min.js"
-            crossorigin="anonymous"></script>
-        <!-- Scripts MVC -->
-        <script
-            src="../../JairoSevilla/SiteAssets/InformesEntraID/JAVASCRIPT/modelo.js"></script>
-        <script
-            src="../../JairoSevilla/SiteAssets/InformesEntraID/JAVASCRIPT/vista.js"></script>
-        <script
-            src="../../JairoSevilla/SiteAssets/InformesEntraID/JAVASCRIPT/controlador.js"></script>
-        <!-- JS de Bootstrap -->
-        <script
-            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <!-- JS de DataTables -->
-        <script type="text/javascript" charset="utf8"
-            src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" charset="utf8"
-            src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-        <!-- chart.js -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- jquery-3.7.1 -->
+    <script src="../../JairoSevilla/SiteAssets/InformesEntraID/LIBRERIAS/jquery/jquery-3.7.1.min.js"></script>
 
-        <!-- Sheet.JS -->
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+    <!-- sweetalert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    </body>
+    <!-- msal-browser -->
+    <script src="https://alcdn.msauth.net/browser/2.20.0/js/msal-browser.min.js" crossorigin="anonymous"></script>
+
+    <!-- JS de Bootstrap -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JS de DataTables -->
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+    <!-- chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+    <!-- Sheet.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
+    <!-- Scripts MVC -->
+    <script src="../../JairoSevilla/SiteAssets/InformesEntraID/JAVASCRIPT/vista.js"></script>
+
+    <script src="../../JairoSevilla/SiteAssets/InformesEntraID/JAVASCRIPT/modelo.js"></script>
+
+    <script src="../../JairoSevilla/SiteAssets/InformesEntraID/JAVASCRIPT/controlador.js"></script>
+
+</body>
 
 </html>
