@@ -23,11 +23,11 @@
 }
 
 body {
-    font-size: 65%; /* Reduce el tamaño del texto */ 
+    font-size: 65%; 
   }
 
   html {
-    zoom: 90%; /* Reduce todo el contenido al 80% */
+    zoom: 90%; 
 }
 
 .containerPrincipal {
@@ -112,11 +112,11 @@ body {
 
 
 .content {
-    display: none; /* Ocultar todos los contenedores */
+    display: none;
 }
 
 .content.active {
-    display: block; /* Mostrar solo el contenedor activo */
+    display: block; 
 }
 
 
@@ -283,11 +283,11 @@ body {
 }
 
 .contenedorFlex2FA {
-    display: flex;               /* Activa Flexbox */
-    flex-direction: row;         /* Asegura que los elementos estén en fila horizontal */
-    justify-content: space-between; /* Espacia los elementos uniformemente */
-    gap: 10px;                   /* Espacio entre los elementos */
-    align-items: flex-start;     /* Alinea los elementos arriba */
+    display: flex;              
+    flex-direction: row;         
+    justify-content: space-between; 
+    gap: 10px;               
+    align-items: flex-start;   
 }
 
 
@@ -562,11 +562,11 @@ input[type="search"].form-control.form-control-sm[aria-controls="tablaUsuarios"]
     border: 2px solid #007ACC;
     border-radius: 8px;
     padding: 10px;
-    margin: 10px auto; /* Centra el contenedor */
+    margin: 10px auto; 
     background-color: #f9f9f9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 500px; /* Controla el ancho máximo del contenedor */
-    width: 100%; /* Asegura que el contenedor use todo el ancho disponible dentro del máximo */
+    max-width: 500px; 
+    width: 100%; 
 }
 
 .tituloCargarArchivo {
@@ -584,9 +584,9 @@ input[type="search"].form-control.form-control-sm[aria-controls="tablaUsuarios"]
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 14px;
     color: #333;
-    margin-top: 10px; /* Espacio entre el título y el texto */
-    margin-bottom: 0; /* Elimina el margen inferior para evitar espacio innecesario */
-    text-align: justify; /* Alinea el texto de manera justificada */
+    margin-top: 10px; 
+    margin-bottom: 0; 
+    text-align: justify; 
 }
 
 
@@ -595,7 +595,7 @@ input[type="search"].form-control.form-control-sm[aria-controls="tablaUsuarios"]
 .contenedorInfo2FA {
     display: flex;
     flex-direction: row;
-    justify-content: space-between; /* Espacio entre los elementos */
+    justify-content: space-between; 
 }
 
 .contenedorCargarArchivo2FA{
@@ -627,8 +627,8 @@ input[type="search"].form-control.form-control-sm[aria-controls="tablaUsuarios"]
 
   .cargarArchivo {
     padding: 10px 20px;
-    background-color: #0459A1; /* Color de fondo actualizado */
-    border: 1px solid #0459A1; /* Borde actualizado */
+    background-color: #0459A1; 
+    border: 1px solid #0459A1; 
     color: #ffffff;
     cursor: pointer;
     font-size: 20px;
@@ -638,8 +638,8 @@ input[type="search"].form-control.form-control-sm[aria-controls="tablaUsuarios"]
   }
   
   .cargarArchivo:hover {
-    background-color: #033c6b; /* Color de fondo para el estado hover */
-    border: 1px solid #033c6b; /* Borde para el estado hover */
+    background-color: #033c6b; 
+    border: 1px solid #033c6b; 
     color: #ffffff;
   }
   
@@ -666,7 +666,7 @@ input[type="search"].form-control.form-control-sm[aria-controls="tablaUsuarios"]
     display: flex;
     cursor: pointer;
     background-color: #f7f7f7;
-    border-bottom: 2px solid #ccc; /* Línea inferior para todo el contenedor de pestañas */
+    border-bottom: 2px solid #ccc; */
 }
 
 /* Estilos para los botones de las pestañas */
@@ -674,7 +674,7 @@ input[type="search"].form-control.form-control-sm[aria-controls="tablaUsuarios"]
     flex: 1;
     padding: 5px;
     border: none;
-    border-bottom: 2px solid #3498db; /* Borde inferior azul por defecto */
+    border-bottom: 2px solid #3498db;
     background: #f0f0f0;
     text-align: center;
     outline: none;
@@ -683,7 +683,7 @@ input[type="search"].form-control.form-control-sm[aria-controls="tablaUsuarios"]
     font-size: 17px;
     font-family: "Arsenal SC", sans-serif;
     color: #555;
-    box-shadow: none; /* Elimina cualquier sombra que pueda causar un borde oscuro */
+    box-shadow: none;
 
 }
 
